@@ -1,6 +1,6 @@
 import HeroSection from "@/components/hero-section";
 import SearchBar from "@/components/search-bar";
-import SurahCard from "@/components/surah-card";
+import SurahRow from "@/components/surah-row";
 import { getAllSurahs } from "@/lib/quran";
 
 export default function HomePage() {
@@ -24,9 +24,9 @@ export default function HomePage() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="rounded-3xl border border-[#e7decd] bg-white/70 px-6">
           {surahs.map((surah) => (
-            <SurahCard key={surah.id} surah={surah} />
+            <SurahRow key={surah.id} surah={surah} />
           ))}
         </div>
       </section>

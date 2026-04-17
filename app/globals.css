@@ -22,3 +22,11 @@ body {
 .font-arabic-scheherazade {
   font-family: "Scheherazade New", serif;
 }
+.tippy-box {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tippy-content {
+  padding: 0 !important;
+}
