@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+📖 Quran Web Application
 
-## Getting Started
+A modern, responsive Quran web application built with Next.js and Tailwind CSS, designed to provide a calm and beautiful reading experience.
 
-First, run the development server:
+✨ Features
+📚 Surah List Page
+Displays all 114 surahs
+Arabic + English names
+Ayah count for each surah
+📖 Ayah Page
+Full surah view
+Arabic text + English translation
+Clean, readable layout
+🔍 Search Functionality
+Search ayahs by translation text
+Fast and responsive filtering
+⚙️ Settings Panel
+Arabic font selection (multiple fonts)
+Adjustable Arabic font size
+Adjustable translation font size
+Preferences persist using localStorage
+🧠 Interactive UX
+Desktop: Hover preview of surahs (tooltip)
+Mobile: Bottom sheet preview (touch-friendly)
+Smooth and intuitive navigation
+📱 Fully Responsive
+Optimized for desktop, tablet, and mobile devices
+🛠 Tech Stack
 
-```bash
+Frontend
+
+Next.js (App Router + SSG)
+Tailwind CSS
+
+Backend
+
+Node.js (data processing script)
+
+Data Source
+
+Quran dataset from:
+https://github.com/semarketir/quranjson
+📂 Project Structure
+app/
+  page.tsx
+  surah/[id]/page.tsx
+
+components/
+  hero-section.tsx
+  navbar.tsx
+  surah-row.tsx
+  search-bar.tsx
+
+lib/
+  quran.ts
+
+data/
+  surahs.json
+  quran.json
+
+scripts/
+  fetch-quran-data.js
+⚙️ Setup & Installation
+1. Clone the repository
+git clone https://github.com/YOUR_USERNAME/quran-web-app.git
+cd quran-web-app
+2. Install dependencies
+npm install
+
+or
+
+pnpm install
+3. Generate Quran dataset
+node scripts/fetch-quran-data.js
+
+This will create:
+
+data/surahs.json
+data/quran.json
+4. Run the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
+🚀 Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app is optimized for deployment on:
 
-## Learn More
+Vercel
+Netlify
+Deploy on Vercel
+npm run build
 
-To learn more about Next.js, take a look at the following resources:
+Then connect your GitHub repo to Vercel and deploy.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🎥 Demo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+👉 Live Demo: (add your Vercel link here)
+👉 Screen Recording: (add your video link here)
 
-## Deploy on Vercel
+🧩 Design Approach
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project focuses on:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Minimal, distraction-free UI
+Readability of Arabic text
+Smooth navigation experience
+Context-aware interactions (hover vs touch)
+
+Unlike typical card-heavy layouts, the UI is designed to feel closer to a reading experience rather than an e-commerce interface.
+
+📌 Notes
+Static Site Generation (SSG) is used for performance
+Quran data is preprocessed using a Node.js script
+Settings are stored locally for persistence
+📜 License
+
+This project is for assessment purposes.
+Quran dataset is sourced under MIT License from the original repository.
+
+🙌 Acknowledgements
+Quran JSON dataset by:
+https://github.com/semarketir/quranjson
