@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import quran from "@/data/quran.json";
+import surahs from "@/data/surahs.json";
 import { useReaderSettings } from "@/components/settings-provider";
 
 type Ayah = {
@@ -11,9 +12,26 @@ type Ayah = {
   translation: string;
 };
 
+type Surah = {
+  id: number;
+  nameArabic: string;
+  nameEnglish: string;
+  ayahCount: number;
+};
+
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const { settings } = useReaderSettings();
+
+  const surahMap = useMemo(() => {
+    const map: Record<number, string> = {};
+
+    (surahs as Surah[]).forEach((surah) => {
+      map[surah.id] = surah.nameEnglish;
+    });
+
+    return map;
+  }, []);
 
   const results = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -21,9 +39,7 @@ export default function SearchBar() {
     if (!normalized) return [];
 
     return (quran as Ayah[])
-      .filter((ayah) =>
-        ayah.translation.toLowerCase().includes(normalized)
-      )
+      .filter((ayah) => ayah.translation.toLowerCase().includes(normalized))
       .slice(0, 20);
   }, [query]);
 
@@ -64,7 +80,8 @@ export default function SearchBar() {
                   className="rounded-2xl border border-[#eee5d6] bg-[#fffdf7] p-4"
                 >
                   <p className="mb-2 text-sm font-medium text-[#7b7a57]">
-                    Surah {ayah.surahId} • Ayah {ayah.ayahNumber}
+                    {surahMap[ayah.surahId] || `Surah ${ayah.surahId}`} • Ayah{" "}
+                    {ayah.ayahNumber}
                   </p>
 
                   <p
