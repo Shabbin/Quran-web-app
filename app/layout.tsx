@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SettingsProvider } from "@/components/settings-provider";
+import SettingsSidebar from "@/components/settings-sidebar";
 
 export const metadata: Metadata = {
   title: "Quran Web App",
@@ -13,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SettingsProvider>
+          {children}
+          <SettingsSidebar />
+        </SettingsProvider>
+      </body>
     </html>
   );
 }

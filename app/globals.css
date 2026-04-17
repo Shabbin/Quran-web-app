@@ -1,14 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap");
+@import "tailwindcss";
 
 :root {
-  --background: #f5efe3;
+  --background: #fffbeb;
   --foreground: #1f2937;
-  --primary: #1f5d42;
-  --muted: #6b7280;
 }
 
 html {
@@ -21,9 +16,9 @@ body {
 }
 
 .font-arabic-amiri {
-  font-family: 'Amiri', serif;
+  font-family: "Amiri", serif;
 }
 
 .font-arabic-scheherazade {
-  font-family: 'Scheherazade New', serif;
+  font-family: "Scheherazade New", serif;
 }
