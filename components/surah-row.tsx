@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
+import { useEffect, useMemo, useRef, useState } from "react";
+import * as HoverCard from "@radix-ui/react-hover-card";
 import { Surah, Ayah } from "@/types/quran";
 import { getAyahsBySurahId } from "@/lib/quran";
 
@@ -98,16 +97,16 @@ function MobilePreviewSheet({
         onClick={onClose}
       />
 
-      <div className="fixed inset-x-0 bottom-0 z-[90] h-[84vh] rounded-t-[30px] border-t border-[#e7decd] bg-[#fffdf7] shadow-[0_-18px_48px_rgba(0,0,0,0.18)]">
+      <div className="fixed inset-x-0 bottom-0 z-[90] h-[84vh] overflow-hidden rounded-t-[30px] border-t border-[#e7decd] bg-[#fffdf7] shadow-[0_-18px_48px_rgba(0,0,0,0.18)]">
         <div className="mx-auto mt-3 h-1.5 w-14 rounded-full bg-[#d9cfbe]" />
 
-        <div className="sticky top-0 z-10 border-b border-[#eee5d6] bg-[#fffdf7]/95 px-5 pb-4 pt-4 backdrop-blur-md">
-          <div className="flex items-start justify-between gap-4">
+        <div className="sticky top-0 z-10 border-b border-[#eee5d6] bg-[#fffdf7]/95 px-4 pb-4 pt-4 backdrop-blur-md sm:px-5">
+          <div className="flex min-w-0 items-start justify-between gap-3 sm:gap-4">
             <div className="min-w-0">
               <p className="text-[11px] uppercase tracking-[0.22em] text-[#8a846f]">
                 Surah {surah.id}
               </p>
-              <h3 className="mt-2 text-[24px] font-semibold tracking-tight text-[#234b34]">
+              <h3 className="mt-2 truncate text-[22px] font-semibold tracking-tight text-[#234b34] sm:text-[24px]">
                 {surah.nameEnglish}
               </h3>
               <p className="mt-1 text-sm text-[#7b7a57]">
@@ -116,7 +115,7 @@ function MobilePreviewSheet({
             </div>
 
             <div className="flex shrink-0 flex-col items-end gap-3">
-              <p className="text-right text-[28px] leading-none text-[#234b34] font-arabic-amiri">
+              <p className="text-right text-[24px] leading-none text-[#234b34] font-arabic-amiri sm:text-[28px]">
                 {surah.nameArabic}
               </p>
 
@@ -131,7 +130,7 @@ function MobilePreviewSheet({
           </div>
         </div>
 
-        <div className="h-[calc(84vh-126px)] overflow-y-auto px-5 py-4">
+        <div className="h-[calc(84vh-126px)] overflow-y-auto px-4 py-4 sm:px-5">
           <div className="space-y-4">
             {ayahs.map((ayah) => (
               <div
@@ -142,7 +141,7 @@ function MobilePreviewSheet({
                   Ayah {ayah.ayahNumber}
                 </p>
 
-                <p className="mb-3 text-right text-[24px] leading-[2.1] text-[#234b34] font-arabic-amiri">
+                <p className="mb-3 break-words text-right text-[22px] leading-[2.1] text-[#234b34] font-arabic-amiri sm:text-[24px]">
                   {ayah.arabic.replace(/^\uFEFF/, "")}
                 </p>
 
@@ -175,6 +174,8 @@ export default function SurahRow({ surah }: Props) {
   const ayahs = useMemo(() => getAyahsBySurahId(surah.id), [surah.id]);
   const [isMobile, setIsMobile] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [desktopOpen, setDesktopOpen] = useState(false);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 1024px)");
@@ -186,20 +187,57 @@ export default function SurahRow({ surah }: Props) {
     return () => media.removeEventListener("change", update);
   }, []);
 
-  const rowContent = (
-    <div className="group flex items-center justify-between border-b border-[#e7decd] py-4 transition hover:bg-[#fffdf7]">
-      <div className="flex items-center gap-6">
-        <span className="w-6 text-sm text-[#7b7a57]">{surah.id}</span>
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
 
-        <div>
-          <p className="text-base font-medium text-[#234b34]">
+  const openCard = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setDesktopOpen(true);
+  };
+
+  const closeCardWithDelay = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+    }
+    closeTimerRef.current = setTimeout(() => {
+      setDesktopOpen(false);
+    }, 180);
+  };
+
+  const closeCardImmediately = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setDesktopOpen(false);
+  };
+
+  const rowContent = (
+    <div className="group flex min-w-0 items-center justify-between gap-3 border-b border-[#e7decd] py-3 transition hover:bg-[#fffdf7] sm:gap-4 sm:py-4">
+      <div className="flex min-w-0 items-center gap-3 sm:gap-6">
+        <span className="w-5 shrink-0 text-xs text-[#7b7a57] sm:w-6 sm:text-sm">
+          {surah.id}
+        </span>
+
+        <div className="min-w-0">
+          <p className="truncate text-sm font-medium text-[#234b34] sm:text-base">
             {surah.nameEnglish}
           </p>
-          <p className="text-xs text-[#7b7a57]">{surah.ayahCount} Ayahs</p>
+          <p className="text-[11px] text-[#7b7a57] sm:text-xs">
+            {surah.ayahCount} Ayahs
+          </p>
         </div>
       </div>
 
-      <p className="text-right text-xl text-[#234b34] font-arabic-amiri">
+      <p className="ml-2 shrink-0 text-right text-base text-[#234b34] font-arabic-amiri sm:ml-3 sm:text-xl">
         {surah.nameArabic}
       </p>
     </div>
@@ -227,44 +265,36 @@ export default function SurahRow({ surah }: Props) {
   }
 
   return (
-    <Tippy
-      content={<SurahPreviewContent surah={surah} ayahs={ayahs} />}
-      interactive
-      delay={[140, 100]}
-      duration={[180, 140]}
-      placement="right-start"
-      appendTo={() => document.body}
-      maxWidth="none"
-      zIndex={9999}
-      offset={[14, 8]}
-      animation="shift-away"
-      popperOptions={{
-        modifiers: [
-          {
-            name: "flip",
-            options: {
-              fallbackPlacements: [
-                "left-start",
-                "right-end",
-                "left-end",
-                "bottom-start",
-                "top-start",
-              ],
-            },
-          },
-          {
-            name: "preventOverflow",
-            options: {
-              boundary: "viewport",
-              padding: 16,
-              altAxis: true,
-              tether: true,
-            },
-          },
-        ],
-      }}
-    >
-      <Link href={`/surah/${surah.id}`}>{rowContent}</Link>
-    </Tippy>
+    <HoverCard.Root open={desktopOpen} onOpenChange={setDesktopOpen}>
+      <div
+        className="relative"
+        onMouseEnter={openCard}
+        onMouseLeave={closeCardWithDelay}
+      >
+        <Link href={`/surah/${surah.id}`} className="block">
+          {rowContent}
+        </Link>
+
+        <HoverCard.Trigger asChild>
+          <span className="absolute right-0 top-1/2 h-px w-px -translate-y-1/2" />
+        </HoverCard.Trigger>
+      </div>
+
+      <HoverCard.Portal>
+        <HoverCard.Content
+          side="left"
+          align="center"
+          sideOffset={14}
+          collisionPadding={16}
+          className="z-[9999]"
+          onMouseEnter={openCard}
+          onMouseLeave={closeCardWithDelay}
+          onPointerDownOutside={closeCardImmediately}
+          onEscapeKeyDown={closeCardImmediately}
+        >
+          <SurahPreviewContent surah={surah} ayahs={ayahs} />
+        </HoverCard.Content>
+      </HoverCard.Portal>
+    </HoverCard.Root>
   );
 }

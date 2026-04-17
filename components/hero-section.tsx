@@ -3,21 +3,23 @@ import Navbar from "./navbar";
 
 export default function HeroSection() {
   return (
-    <section className="min-h-screen bg-[#FFFBEB]">
+    <section className="bg-[#FFFBEB]">
       <Navbar />
 
-      <div className="mx-auto flex min-h-screen w-full max-w-[1550px] items-start px-6 pt-16 lg:px-6">
-        <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-[44%_56%] lg:items-end lg:gap-2">
-          <div className="w-full pt-20 lg:pt-32 lg:pb-[-10]">
+      <div className="mx-auto flex w-full max-w-[1550px] px-4 pt-12 sm:px-6 sm:pt-16 lg:px-6 lg:min-h-screen">
+        <div className="grid w-full grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[44%_56%] lg:items-center lg:gap-6">
+          
+          {/* TEXT SIDE */}
+          <div className="w-full pt-6 sm:pt-10 lg:pt-0">
             <p className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-[#7b7a57]">
               Quran Web Application
             </p>
 
-            <h1 className="mb-6 text-4xl font-semibold leading-tight text-[#234b34] sm:text-5xl lg:text-6xl">
+            <h1 className="mb-6 text-4xl font-semibold leading-tight text-[#234b34] lg:text-6xl">
               Explore the Holy Quran with a calm, beautiful reading experience.
             </h1>
 
-            <p className="mb-8 max-w-xl text-base leading-8 text-[#6f6a5c] sm:text-lg">
+            <p className="mb-8 max-w-xl text-base leading-8 text-[#6f6a5c] lg:text-lg">
               Browse all 114 surahs, read ayahs with translation, search verses
               by translation text, and personalize your reading settings.
             </p>
@@ -39,8 +41,9 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="flex w-full items-end justify-end">
-            <div className="w-full max-w-[760px]">
+          {/* IMAGE SIDE */}
+          <div className="flex w-full items-center justify-center lg:justify-end">
+            <div className="w-full max-w-[520px] lg:max-w-[760px]">
               <Image
                 src="/hero-art.png"
                 alt="Hero artwork"

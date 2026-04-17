@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { ARABIC_FONTS } from "@/lib/settings";
 import { useReaderSettings } from "@/components/settings-provider";
 
@@ -25,7 +26,7 @@ export default function SettingsSidebar() {
           <button
             type="button"
             onClick={closeSettings}
-            className="rounded-full border border-[#d8cfbe] px-3 py-1 text-sm text-[#234b34]"
+            className="rounded-full border border-[#d8cfbe] px-3 py-1 text-sm text-[#234b34] transition hover:bg-white"
           >
             Close
           </button>
@@ -36,21 +37,29 @@ export default function SettingsSidebar() {
             <label className="mb-3 block text-sm font-medium text-[#5c5a4f]">
               Arabic Font
             </label>
-            <select
-              value={settings.arabicFont}
-              onChange={(e) =>
-                updateSettings({
-                  arabicFont: e.target.value as "amiri" | "scheherazade",
-                })
-              }
-              className="w-full rounded-2xl border border-[#d8cfbe] bg-white px-4 py-3 outline-none"
-            >
-              {ARABIC_FONTS.map((font) => (
-                <option key={font.value} value={font.value}>
-                  {font.label}
-                </option>
-              ))}
-            </select>
+
+            <div className="relative">
+              <select
+                value={settings.arabicFont}
+                onChange={(e) =>
+                  updateSettings({
+                    arabicFont: e.target.value as "amiri" | "scheherazade",
+                  })
+                }
+                className="w-full appearance-none rounded-2xl border border-[#d8cfbe] bg-white px-4 py-3 pr-12 text-[#234b34] outline-none transition focus:border-[#bcae93]"
+              >
+                {ARABIC_FONTS.map((font) => (
+                  <option key={font.value} value={font.value}>
+                    {font.label}
+                  </option>
+                ))}
+              </select>
+
+              <ChevronDown
+                className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7b7a57]"
+                strokeWidth={2}
+              />
+            </div>
           </div>
 
           <div>
